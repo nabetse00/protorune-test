@@ -12,6 +12,10 @@ export function _start(): void {
   const box = Box.from(data);
   const height = parsePrimitive<u32>(box);
   const block = new Block(box);
+  if (height < GENESIS) {
+    _flush();
+    return;
+  }
   new SpendablesIndex().indexBlock(height, block);
   new DefaultProtorune().indexBlock(height, block);
   _flush();
